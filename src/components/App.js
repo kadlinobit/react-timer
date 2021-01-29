@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Menu, Icon } from 'semantic-ui-react';
 import { Router, Route } from 'react-router-dom';
 import  history from 'history/history';   
 
@@ -11,7 +11,15 @@ import TimersDashboard from 'components/TimersDashboard';
 const App = () => {
     return(    
         <Router history={history}>  
-            <Container>
+            <Menu fixed inverted>
+                <Container>
+                    <Menu.Item header>
+                        <Icon name="time" size="large"></Icon>
+                        Task Timer
+                    </Menu.Item>
+                </Container>
+            </Menu>
+            <Container content>
                 <Route path="/" exact component={ TimersDashboard } />
                 <Route path="/timer/delete/:id" component={ TimerDelete } />
                 <Route path="/timer/edit/:id" component={ TimerEdit } />
