@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Icon, Image, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { millisecondsToHuman } from 'helpers/helpers';
-import { startTimer, stopTimer, resetTimer } from 'actions';
+import { startTimer, stopTimer, resetTimer, initDelete, initEdit } from 'actions';
 
 const renderButton = (timer, startTimer, stopTimer, resetTimer, setClock) => {
 
@@ -40,7 +39,7 @@ const calcElapsedTime = (elapsed, runningSince) => {
 }
 
 const Timer = (props) => {
-    const { timer, startTimer, stopTimer, resetTimer } = props;
+    const { timer, startTimer, stopTimer, resetTimer, initDelete, initEdit } = props;
     const [ clock, setClock ] = useState(0);
 
     useEffect(() => {
@@ -64,22 +63,18 @@ const Timer = (props) => {
             </Image>
             <Card.Content>
                 <Card.Header>
-                    <form>{ timer.title }</form>
+                    { timer.title }
                 </Card.Header>
                 <Card.Meta>{ timer.description }</Card.Meta>
                 <Divider />
                 { renderButton(timer, startTimer, stopTimer, resetTimer, setClock) }
             </Card.Content>
             <Card.Content extra>
-                <Link to={`/timer/edit/${timer.id}`}>
-                    <Icon name="edit"></Icon>
-                </Link>                
-                <Link to={`/timer/delete/${timer.id}`}>
-                    <Icon name="trash alternate"></Icon>
-                </Link>
+                    <Icon onClick={ () => initEdit(timer.id) } name="edit"></Icon>           
+                    <Icon onClick={ () => initDelete(timer.id) } name="trash alternate"></Icon>
             </Card.Content>
         </Card>
     )
 }
 
-export default connect(null, { startTimer, stopTimer, resetTimer })(Timer);
+export default connect(null, { startTimer, stopTimer, resetTimer, initDelete, initEdit })(Timer);

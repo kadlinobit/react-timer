@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addTimer } from 'actions';
 import TimerForm from 'components/TimerForm';
 
-const TimerAdd = ({ history, addTimer }) => {
+const TimerAdd = ({ addTimer, open, onClose }) => {
 
     const onSubmit = (formValues) => {
         addTimer(formValues);
@@ -13,7 +13,8 @@ const TimerAdd = ({ history, addTimer }) => {
     return (
         <TimerForm 
             title="Add New Timer"
-            onDismiss={ () => history.push('/') }
+            open={ open }
+            onClose={ onClose }
             onSubmit={ onSubmit }
         />
     );

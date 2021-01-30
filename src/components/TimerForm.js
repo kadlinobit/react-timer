@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Field, reduxForm } from 'redux-form';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Modal } from 'semantic-ui-react';
 
 const renderTextInput = ({ required, label, input, meta }) => {
     
@@ -33,30 +32,26 @@ const validate = (formValues) => {
 }
 
 const TimerForm = (props) => {
-    return ReactDOM.createPortal(
-		<div 
-            onClick={props.onDismiss} 
-            className="ui dimmer modals visible active"
+    console.log(props.initialValues);
+    return(
+        <Modal
+            open={ props.open }
+            onClose={ props.onClose }
         >
-            <div 
-                onClick={(e) => e.stopPropagation()} 
-                className="ui standard modal visible active"
-            >
-                <div className="header">{ props.title }</div>
-                <div className="content">
-                    <Form id="timer-form" onSubmit={props.handleSubmit(props.onSubmit)}>               
-                        <Field required name="title" label="Title" component={ renderTextInput } />
-                        <Field name="description" label="Description" component={ renderTextInput } />
-                    </Form>
-                </div>
-                <div className="actions">
-                    <Button form="timer-form" color="green" type="submit">Submit</Button>
-                    <Button color="grey" onClick={ props.onDismiss }>Cancel</Button>
-                </div>             
-            </div>
-        </div>,
-        document.querySelector('#modal')
+            <Modal.Header>{ props.title }</Modal.Header>
+            <Modal.Content>
+                <Form id="timer-form" onSubmit={props.handleSubmit(props.onSubmit)}>               
+                    <Field required name="title" label="Title" component={ renderTextInput } />
+                    <Field name="description" label="Description" component={ renderTextInput } />
+                </Form>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button form="timer-form" color="green" type="submit">Submit</Button>
+                <Button color="grey" onClick={ props.onClose }>Cancel</Button>
+            </Modal.Actions>
+        </Modal>
     );
+
 };
 
 export default reduxForm({

@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
-import history from 'history/history';
 
 import { 
     ADD_TIMER, 
@@ -8,32 +7,42 @@ import {
     START_TIMER, 
     STOP_TIMER,
     DELETE_TIMER,
-    RESET_TIMER
+    RESET_TIMER,
+    INIT_DELETE,
+    INIT_EDIT,
+    INIT_ADD,
+    CANCEL_MODAL
 } from 'actions/types';
 
 export const addTimer = (timer) => {
     
-    history.push('/');
+    return (dispatch) => {
+        
+        dispatch({ type: CANCEL_MODAL });
     
-    return {
-        type: ADD_TIMER,
-        payload: {
-            id: uuidv4(),
-            title: timer.title,
-            description: timer.description,
-            runningSince: null, 
-            elapsed: 0
-        }
+        dispatch ({
+            type: ADD_TIMER,
+            payload: {
+                id: uuidv4(),
+                title: timer.title,
+                description: timer.description,
+                runningSince: null, 
+                elapsed: 0
+            }
+        });   
     }
 };
 
 export const editTimer = (id, timer) => {
 
-    history.push('/');
+    return (dispatch) => {
+        
+        dispatch({ type: CANCEL_MODAL });
 
-    return {
-        type: EDIT_TIMER,
-        payload: { id, ...timer }
+        dispatch ({
+            type: EDIT_TIMER,
+            payload: { id, ...timer }
+        });
     }
 }
 
@@ -71,10 +80,41 @@ export const stopTimer = (id) => {
 
 export const deleteTimer = (id) => {
     
-    history.push('/');
-    
+    return (dispatch) => {
+        
+        dispatch({ type: CANCEL_MODAL });
+        
+        dispatch ({
+            type: DELETE_TIMER,
+            payload: id
+        });
+    }
+}
+
+/////////// MODAL ACTIONS //////////////
+
+export const initDelete = (id) => {
     return {
-        type: DELETE_TIMER,
+        type: INIT_DELETE,
         payload: id
+    }
+}
+
+export const initEdit = (id) => {
+    return {
+        type: INIT_EDIT,
+        payload: id
+    }
+}
+
+export const initAdd = () => {
+    return {
+        type: INIT_ADD
+    }
+}
+
+export const cancelModal = () => {
+    return {
+        type: CANCEL_MODAL
     }
 }
