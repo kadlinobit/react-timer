@@ -70,8 +70,8 @@ const Timer = (props) => {
                 { renderButton(timer, startTimer, stopTimer, resetTimer, setClock) }
             </Card.Content>
             <Card.Content extra>
-                    <Icon onClick={ () => initEdit(timer.id) } name="edit"></Icon>           
-                    <Icon onClick={ () => initDelete(timer.id) } name="trash alternate"></Icon>
+                    <Icon onClick={ () => initEdit(timer.id) } name="edit" style={{ cursor: 'pointer' }}></Icon>           
+                    <Icon onClick={ () => initDelete(timer.id) } name="trash alternate" style={{ cursor: 'pointer' }}></Icon>
             </Card.Content>
         </Card>
     )

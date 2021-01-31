@@ -67,7 +67,8 @@ const TimersDashboard = (props) => {
                             inverted 
                             color="blue" 
                             name="add" 
-                            size="big" 
+                            size="big"
+                            style={{ cursor: 'pointer' }}
                         />
                     }
                     content="Add New Timer"
